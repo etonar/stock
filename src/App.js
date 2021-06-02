@@ -45,6 +45,7 @@ function App() {
 
   useEffect(() => {
     getData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   useEffect(() => {
@@ -53,7 +54,7 @@ function App() {
         (!loading && window.innerHeight + window.scrollY) >=
         document.body.scrollHeight - 2
       ) {
-        console.log('test2');
+       
 
         setPage((oldPage) => {
           return oldPage + 1;
@@ -61,6 +62,7 @@ function App() {
       }
     });
     return () => window.removeEventListener('scroll', event);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handlSubmit = (e) => {
