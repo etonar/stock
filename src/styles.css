@@ -1,0 +1,100 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.loading {
+  margin: 2rem auto;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.container {
+  margin: 3rem auto;
+}
+
+.form {
+  width: 90vw;
+  max-width: 1170px;
+  margin: 4rem auto;
+}
+
+.form > div {
+  width: 95%;
+  max-width: 35rem;
+  padding: 0.6rem 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 0.19rem solid rgb(68, 83, 110);
+}
+
+.form > div input {
+  border: none;
+  font-size: 1.4rem;
+  color: rgb(68, 83, 110);
+}
+
+.form > div input:focus {
+  outline: none;
+}
+
+.form > div svg {
+  font-size: 1.4rem;
+  color: rgb(68, 83, 110);
+}
+
+.images-container {
+  width: 90vw;
+  max-width: 1170px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-row: 280px;
+  gap: 2rem;
+}
+
+.item {
+  position: relative;
+  overflow: hidden;
+}
+
+.item > img {
+  display: block;
+  width: 100%;
+  min-height: 280px;
+  max-height: 280px;
+  height: auto;
+  object-fit: cover;
+}
+
+.item .info {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  transform: translateY(100%);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  transition: transform 0.3s;
+}
+
+.item .info img {
+  border-radius: 50%;
+}
+
+.item:hover .info {
+  transform: translateY(0);
+}
