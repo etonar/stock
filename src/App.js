@@ -41,7 +41,6 @@ function App() {
   }
   useEffect(() => {
     fetchImages()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
 
   useEffect(() => {
@@ -56,7 +55,6 @@ function App() {
       }
     })
     return () => window.removeEventListener('scroll', event)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const handleSubmit = (e) => {
     e.preventDefault()
