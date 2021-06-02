@@ -1,47 +1,51 @@
-import React, { useState, useEffect } from 'react'
-import { FaSearch } from 'react-icons/fa'
+import { useEffect, useState } from 'react';
 
-import SingleItem from './single-item'
-const clientID = '?client_id=f7N-c7ynV9x6FAE3c1mP35-_1uRQeFNKMYlRro55XGA'
-const mainUrl = `https://api.unsplash.com/photos/`
-const searchUrl = `https://api.unsplash.com/search/photos/`
+// icons
+import { FaSearch } from 'react-icons/fa';
+
+// component
+import SingleItem from './single-image';
+
+//URLS
+const mainURL = 'https://api.unsplash.com/photos/';
+const searchURL = 'https://api.unsplash.com/search/photos/';
 
 function App() {
-  const [loading, setLoading] = useState(false)
-  const [photos, setPhotos] = useState([])
-  const [page, setPage] = useState(1)
-  const [query, setQuery] = useState('')
-  const fetchImages = async () => {
-    setLoading(true)
-    let url
-    const urlPage = `&page=${page}`
-    const urlQuery = `&query=${query}`
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [query, setQuery] = useState('');
+
+  const clientID = '?client_id=f7N-c7ynV9x6FAE3c1mP35-_1uRQeFNKMYlRro55XGA';
+
+  const getData = async () => {
+    setLoading(true);
+
+    let url;
     if (query) {
-      url = `${searchUrl}${clientID}${urlPage}${urlQuery}`
+      url = `${searchURL}${clientID}&page=${page}&query=${query}`;
     } else {
-      url = `${mainUrl}${clientID}${urlPage}`
+      url = `${mainURL}${clientID}&page=${page}`;
     }
-    try {
-      const response = await fetch(url)
-      const data = await response.json()
-      setPhotos((oldPhotos) => {
-        if (query && page === 1) {
-          return data.results
-        } else if (query) {
-          return [...oldPhotos, ...data.results]
-        } else {
-          return [...oldPhotos, ...data]
-        }
-      })
-      setLoading(false)
-    } catch (error) {
-      console.log(error)
-      setLoading(false)
-    }
-  }
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    setData((oldData) => {
+      if (query && page === 1) {
+        return data.results;
+      } else if (query) {
+        return [...oldData, ...data.results];
+      } else {
+        return [...oldData, ...data];
+      }
+    });
+    setLoading(false);
+  };
+
   useEffect(() => {
-    fetchImages()
-  }, [page])
+    getData();
+  }, [page]);
 
   useEffect(() => {
     const event = window.addEventListener('scroll', () => {
@@ -49,44 +53,51 @@ function App() {
         (!loading && window.innerHeight + window.scrollY) >=
         document.body.scrollHeight - 2
       ) {
+        console.log('test2');
+
         setPage((oldPage) => {
-          return oldPage + 1
-        })
+          return oldPage + 1;
+        });
       }
-    })
-    return () => window.removeEventListener('scroll', event)
-  }, [])
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setPage(() => 1)
-    fetchImages()
-  }
+    });
+    return () => window.removeEventListener('scroll', event);
+  }, []);
+
+  const handlSubmit = (e) => {
+    e.preventDefault();
+    setPage(1);
+    getData();
+  };
+
   return (
-    <main>
-      <section>
-        <form >
+    <div className="container">
+      <form
+        className="form"
+        onSubmit={(e) => {
+          handlSubmit(e);
+        }}
+      >
+        <div>
           <input
-            type='text'
-            placeholder='search'
+            type="text"
+            placeholder="Search"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
-           
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
           />
-          <button  onClick={handleSubmit}>
-            <FaSearch />
-          </button>
-        </form>
-      </section>
-      <section >
-        <div >
-          {photos.map((image, index) => {
-            return <SingleItem key={index} {...image} />
-          })}
+          <FaSearch />
         </div>
-        {loading && <h2 className='loading'>Loading...</h2>}
+      </form>
+
+      <section className="images-container">
+        {data.map((item) => {
+          return <SingleItem key={item.id} {...item} />;
+        })}
       </section>
-    </main>
-  )
+      {loading && <h1 className="loading">loading...</h1>}
+    </div>
+  );
 }
 
-export default App
+export default App;
