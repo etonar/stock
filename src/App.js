@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FaSearch } from 'react-icons/fa'
 
-import Photo from './Photo'
+import SingleItem from './single-item'
 const clientID = '?client_id=f7N-c7ynV9x6FAE3c1mP35-_1uRQeFNKMYlRro55XGA'
 const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
@@ -63,24 +63,24 @@ function App() {
   }
   return (
     <main>
-      <section className='search'>
-        <form className='search-form'>
+      <section>
+        <form >
           <input
             type='text'
             placeholder='search'
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className='form-input'
+           
           />
-          <button type='submit' className='submit-btn' onClick={handleSubmit}>
+          <button  onClick={handleSubmit}>
             <FaSearch />
           </button>
         </form>
       </section>
-      <section className='photos'>
-        <div className='photos-center'>
+      <section >
+        <div >
           {photos.map((image, index) => {
-            return <Photo key={index} {...image} />
+            return <SingleItem key={index} {...image} />
           })}
         </div>
         {loading && <h2 className='loading'>Loading...</h2>}
